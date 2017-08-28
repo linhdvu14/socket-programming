@@ -1,0 +1,58 @@
+Description: Command line client-server network file transfer application. Client can request directory listing and file to transfer. Server is multi-threaded and can handle up to 5 simultaneous incoming connections. App currently only handles text files.
+
+
+1) To compile:
+	make all
+
+
+2) To start the program, first start the server:
+	./ftserver [server portno]
+
+Then start the client:
+	python ftclient.py [server name] [server portno] [-l / -g filename] [data portno]
+
+For example, to contact server running on port 30021 of the same computer and request directory listing on data port 30020:
+	python ftclient.py localhost 30021 -l 30020
+
+To contact server running on port 30021 of the same computer and request file "plaintext" on data port 30020:
+	python ftclient.py localhost 30021 -g plaintext 30020
+
+
+3) Notes:
+- Each connection to server by client is good only for one request. To make a new request, start the client again to initiate a new connection (see #2 for instruction).
+- The file requested by client will be saved to client’s current directory. If client’s directory already has file of the same name, program will prompt user to enter new name to save the file as. Enter the same name to overwrite current file.
+- Server stays on to accept connection until terminated by supervisor. To terminate server, press Ctrl+C on the server window.
+- Server can handle up to 5 simultaneous connections. To start multiple connections, simply start the client in multiple windows.
+
+
+4) Demo
++) Server’s window:
+$ ./ftserver 50000
+Server open on port 50000.
+
+New connection established with MacBook-Pro.local.
+List directory requested on port 25000.
+Sending directory structure to MacBook-Pro.local:25000.
+
+New connection established with MacBook-Pro.local.
+File 'text-small.txt' requested on port 25000.
+Sending 'text-small.txt' to MacBook-Pro.local:25000.
+
++) Client’s window:
+$ python ftclient.py localhost 50000 -l 25000
+New connection established with macbook-pro.local.
+Receiving directory structure from macbook-pro.local:50000.
+README
+ftclient.py
+ftserver
+ftserver-utils.c
+ftserver-utils.h
+ftserver.c
+makefile
+text-small.txt
+
+$ python ftclient.py localhost 50000 -g text-small.txt 25000
+New connection established with macbook-pro.local.
+File requested already existed. Enter new file name: text-small2.txt
+Receiving 'text-small.txt' from macbook-pro.local:50000.
+File transfer completed.

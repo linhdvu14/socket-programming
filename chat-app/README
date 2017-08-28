@@ -1,0 +1,44 @@
+Description: Command line client-server network chat application. The server program is written in Python and the client program in C.
+
+
+1) To compile:
+	make all
+
+
+2) To start the app, first start the server:
+	python chatserver.py [port#]
+
+Then start the client:
+	./chatclient [hostname] [host port#]
+
+If testing on the same computer, use 'localhost' as the hostname.
+
+On both server and client’s windows, enter user’s handle name upon request. Messages from both client and server will have the correct handle prepended. Server and client can now alternate exchanging messages, starting with the client.
+
+If either host enters "/quit", the connection will be closed from both sides; the client process exits, while the server continues listening for new connections. To terminate the server process, press "Ctrl+C" on the server window.
+
+Both hosts will print a message to the console whenever a connection is established or closed.
+
+
+3) Demo
++) Server’s window:
+$ python chatserver.py 25000
+What's your name?> Server
+Server ready. Listening for incoming connections.
+Connection established.
+Client> hello server!
+Server> hi client
+Client> bye!
+Server> bye
+Connection closed.
+
++) Client’s window:
+$ ./chatclient localhost 25000
+Connection established.
+What's your name?> Client
+Client> hello server!
+Server> hi client
+Client> bye!
+Server> bye
+Client> /quit
+Connection closed.
