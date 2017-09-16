@@ -1,6 +1,6 @@
 /*********************************************************************
 ** chatclient.c
-# Description: Client side of client-server network chat application 
+** Description: Client side of client-server network chat application 
 *********************************************************************/
 
 #include <stdio.h>
